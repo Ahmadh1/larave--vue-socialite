@@ -10,11 +10,11 @@
                        <form>
                             <div class="form-group">
                               <label for="name">Email:</label>
-                              <input type="email" class="form-control" v-model="email" id="email" aria-describedby="emailHelpId" placeholder="ABC@example.com">
+                              <input type="email" class="form-control" v-model="form.email" id="email" aria-describedby="emailHelpId" placeholder="ABC@example.com">
                             </div>
                             <div class="form-group">
                               <label for="password">Pasword:</label>
-                              <input type="password" class="form-control" v-model="password" id="password" aria-describedby="emailHelpId" placeholder="Enter Password">
+                              <input type="password" class="form-control" v-model="form.password" id="password" aria-describedby="emailHelpId" placeholder="Enter Password">
                             </div>
                             <button class="btn btn-success" @click.prevent="submit">Register</button>
                         </form>
@@ -26,17 +26,26 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     name: 'Login',
     data() {
         return {
-            email: '',
-            password: ''
+            form: {
+                email: '',
+                password: ''
+            }
         }
     },
     methods: {
+        ...mapActions({
+            login: 'login'
+        }),
         submit() {
-            alert('working')
+           this.login(this.form)
+                .then(() => {
+                    this.$router.push('dashboard')
+                })
         }
     }
 }

@@ -26,12 +26,41 @@
         </div>
       </li>
     </ul>
+    <div class="navbar-nav navbar-right">
+      <button class="btn btn-danger btn-sm" @click.prevent="logout" v-if="loggedIn">logout</button>
+    </div>
   </div>
   </nav>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  data() {
+    return {
+
+    }
+  },
+  created() {
+    this.setState()
+  },
+  computed: {
+    ...mapGetters({
+      loggedIn: 'loggedIn'
+    })
+  },
+  methods: {
+    ...mapActions({
+      logoutUser: 'logout',
+      setState: 'setLoginState'
+    }),
+    logout() {
+      this.logoutUser()
+          .then(() => {
+            this.$router.push('login');
+          })
+    }
+  }
 }
 </script>
